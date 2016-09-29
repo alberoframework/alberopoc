@@ -1,0 +1,49 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.alberoframework'
+version = '1.1'
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+
+	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.1.7'
+
+	//SERVLET API
+	//compile 'javax.servlet:servlet-api:2.5'
+	compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+	
+//	compile group: 'org.springframework', name: 'spring-web', version: '4.2.5.RELEASE'
+	
+//    compile 'org.reflections:reflections:0.9.10'
+
+    compile 'com.google.guava:guava:18.0'
+
+//    compile 'commons-fileupload:commons-fileupload:1.3'
+    
+    compile 'commons-io:commons-io:2.2'
+    
+    compile 'org.apache.commons:commons-lang3:3.3.2'
+    compile 'javax.mail:mail:1.4'
+    compile 'commons-beanutils:commons-beanutils:1.9.2'
+
+    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.4.0");
+
+    compile 'com.lowagie:itext:4.2.1'
+    compile 'org.freemarker:freemarker:2.3.22'
+
+    // Test.
+    compile group: 'junit', name: 'junit', version: '4.12'
+//    testCompile 'org.mockito:mockito-all:1.10.19'
+}
+
+task wrapper(type: Wrapper) { gradleVersion = '3.0' }

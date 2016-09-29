@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE")
+    }
+
+}
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'spring-boot'
+
+group = 'com.alberoframework'
+version = '1.0'
+
+springBoot {
+    mainClass = "com.alberoframework.sample.issuetracker.endpoint.IssueTrackerEndpoint"
+}
+
+if (!hasProperty('mainClass')) {
+    ext.mainClass = "com.alberoframework.sample.issuetracker.endpoint.IssueTrackerEndpoint"
+}
+
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+
+	compile 'com.alberoframework:alberopoc-spring:1.1'
+
+	//SPRING BOOT
+	
+	compile("org.springframework.boot:spring-boot-starter-parent:1.4.0.RELEASE")
+    	
+    compile("org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE")
+    compile("org.springframework.boot:spring-boot-starter-tomcat:1.4.0.RELEASE")
+    
+    compile("org.springframework.boot:spring-boot-starter-test:1.4.0.RELEASE")
+    
+    compile("org.springframework.boot:spring-boot-starter-security:1.4.0.RELEASE")
+    
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf:1.4.0.RELEASE")
+    
+	compile("org.springframework.boot:spring-boot-starter-data-mongodb:1.4.0.RELEASE")
+	
+	//MONGODB
+	compile 'org.mongodb:mongo-java-driver:3.2.2'
+	compile 'com.github.fakemongo:fongo:2.0.6'
+
+    //compile 'org.reflections:reflections:0.9.10'
+
+    compile 'com.google.guava:guava:18.0'
+    compile 'org.projectlombok:lombok:1.16.2'
+
+    // Test.
+    compile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task wrapper(type: Wrapper) { gradleVersion = '3.0' }
+
+bootRun {
+    jvmArgs = ['-Xdebug', '-Xrunjdwp:server=y,transport=dt_socket,address=8888,suspend=n']
+}
+
