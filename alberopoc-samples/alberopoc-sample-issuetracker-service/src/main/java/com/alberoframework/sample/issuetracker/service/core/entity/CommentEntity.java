@@ -11,11 +11,12 @@ import com.alberoframework.domain.entity.contract.AbstractEntity;
 @Setter(AccessLevel.PACKAGE)
 public class CommentEntity extends AbstractEntity<String> {
 
+	private String projectId;
+	private String issueId;
     @Id
     private String commentId;
     private String text;
-    private String issueId;
-    private String authorUserId;
+    private String creatorUserId;
 
     @Override
     public String identity() {

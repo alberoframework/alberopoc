@@ -6,8 +6,6 @@ import com.alberoframework.component.query.gateway.ContextualizedQueryGateway;
 import com.alberoframework.component.request.contract.SimpleAuthenticatedRequestEnvelope;
 import com.alberoframework.hypermedia.HypermediaObjectResource;
 import com.alberoframework.sample.issuetracker.component.query.handler.AbstractIssueTrackerEnvelopeQueryHandler;
-import com.alberoframework.sample.issuetracker.service.core.command.CreateIssueCommand;
-import com.alberoframework.sample.issuetracker.service.core.command.CreateProjectCommand;
 import com.alberoframework.sample.issuetracker.service.core.command.UpdateProjectCommand;
 import com.alberoframework.sample.issuetracker.service.core.entity.ProjectEntity;
 import com.alberoframework.sample.issuetracker.service.core.query.ProjectQuery;
@@ -18,11 +16,12 @@ public class ProjectAppQueryHandler extends AbstractIssueTrackerEnvelopeQueryHan
     protected HypermediaObjectResource<ProjectEntity> doHandle(SimpleAuthenticatedRequestEnvelope<ProjectAppQuery, HypermediaObjectResource<ProjectEntity>> env, ContextualizedQueryGateway queryGateway) {
         final String projectId = env.getRequest().getProjectId();
 
-        return queryGateway.handle(new ProjectQuery(projectId))
-            .map(project ->  new HypermediaObjectResource<>(project))
-            .orElseThrow(() -> new IllegalStateException("No project with id " + projectId + " found"))
-            .withLink("update", new UpdateProjectCommand(projectId))
-            .withLink("create-issue", new CreateIssueCommand(projectId))
-            .withLink("issues", new ProjectIssuesCollectionAppQuery(projectId));
+        return  queryGateway.handle(new ProjectQuery(projectId))
+				            .map(project ->  
+				            	new HypermediaObjectResource<>(project)
+				            		.withLink("update", new UpdateProjectCommand(projectId))
+						            .withLink("issues", new ProjectIssuesCollectionAppQuery(projectId))
+						    )
+				            .orElseThrow(() -> new IllegalStateException("No project with id " + projectId + " found"));
     }
 }

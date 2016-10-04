@@ -6,31 +6,31 @@ import com.alberoframework.component.query.contract.FalsePredicateQuery;
 import com.alberoframework.component.query.contract.PredicateQuery;
 import com.alberoframework.component.query.contract.TruePredicateQuery;
 import com.alberoframework.sample.issuetracker.service.core.value.IssueStatusValue;
-import com.alberoframework.sample.issuetracker.service.core.value.MembershipTypeValue;
+import com.alberoframework.sample.issuetracker.service.core.value.ProjectMembershipTypeValue;
 
 public class PredicateQueries {
 
-	public static PredicateQuery isAdmin(String userId) {
+	public static PredicateQuery userIsAdmin(String userId) {
 		return new UserAdminPredicateQuery(userId);
 	}
 
-	public static PredicateQuery isAssignee(String userId, String issueId) {
-		return new UserIsAssigneePredicateQuery(userId, issueId);
+	public static PredicateQuery userIsAssigneeOfIssue(String userId, String projectId, String issueId) {
+		return new UserIsAssigneeOfIssuePredicateQuery(userId, projectId, issueId);
 	}
 
-	public static PredicateQuery isManager(String userId, String projectId) {
-		return isMemberOfProject(userId, MembershipTypeValue.MANAGER, projectId);
+	public static PredicateQuery userIsManagerOfProject(String userId, String projectId) {
+		return userIsMemberOfProject(userId, projectId, ProjectMembershipTypeValue.MANAGER);
 	}
 
-	public static PredicateQuery isMemberOfProject(String userId, String projectId) {
-		return isMemberOfProject(userId, null, projectId);
+	public static PredicateQuery userIsMemberOfProject(String userId, String projectId) {
+		return userIsMemberOfProject(userId, projectId, null);
 	}
-	public static PredicateQuery isMemberOfProject(String userId, MembershipTypeValue membership, String projectId) {
-		return new UserIsMemberOfIssueProjectPredicateQuery(userId, Optional.ofNullable(membership), projectId);
+	public static PredicateQuery userIsMemberOfProject(String userId, String projectId, ProjectMembershipTypeValue membership) {
+		return new UserIsMemberOfProjectPredicateQuery(userId, projectId, Optional.ofNullable(membership));
 	}
 
-	public static PredicateQuery isIssueInStatus(String issueId, IssueStatusValue status) {
-		return new IssueInStatusPredicateQuery(issueId, status);
+	public static PredicateQuery issueIsInStatus(String projectId, String issueId, IssueStatusValue status) {
+		return new IssueInStatusPredicateQuery(projectId, issueId, status);
 	}
 
 	public static PredicateQuery falsePredicateQuery() {

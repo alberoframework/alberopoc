@@ -14,5 +14,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CommentCollectionQuery extends AbstractQuery<Iterable<CommentEntity>>{
 
+	private String projectId;
     private String issueId;
 }

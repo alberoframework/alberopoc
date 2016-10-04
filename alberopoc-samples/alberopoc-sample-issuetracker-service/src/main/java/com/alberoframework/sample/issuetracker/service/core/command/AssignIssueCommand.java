@@ -13,5 +13,5 @@ public class AssignIssueCommand extends AbstractCommand<VoidUnit> {
 
     private String projectId;
     private String issueId;
-    private String assignedUserId;
+    private String userId;
 }

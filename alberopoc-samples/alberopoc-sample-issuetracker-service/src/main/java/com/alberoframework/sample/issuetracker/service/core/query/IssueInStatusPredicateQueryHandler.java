@@ -11,7 +11,7 @@ import java.util.Objects;
 public class IssueInStatusPredicateQueryHandler extends AbstractIssueTrackerQueryHandler<IssueInStatusPredicateQuery, Boolean>{
     @Override
     protected Boolean doHandle(IssueInStatusPredicateQuery query, ContextualizedQueryGateway queryGateway) {
-        Boolean response = queryGateway.handle(new IssueQuery(query.getIssueId()))
+        Boolean response = queryGateway.handle(new IssueQuery(query.getProjectId(), query.getIssueId()))
             .map(issue -> Objects.equals(issue.getStatus(), query.getStatus()))
             .orElse(false);
 

@@ -14,10 +14,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateCommentCommand extends AbstractIssueTrackerCreateEntityCommand<VoidUnit> {
 
+	private String projectId;
+	private String issueId;
     private String commentId;
     private String text;
-    private String issueId;
-    private String authorUserId;
 
     @Override
     public void assignIdentity(String identity) {

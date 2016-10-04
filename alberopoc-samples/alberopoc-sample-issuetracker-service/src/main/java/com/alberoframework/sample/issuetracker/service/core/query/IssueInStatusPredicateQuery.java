@@ -10,6 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 public class IssueInStatusPredicateQuery implements PredicateQuery {
+	private String projectId;
     private String issueId;
     private IssueStatusValue status;
 }

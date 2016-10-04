@@ -1,17 +1,18 @@
 package com.alberoframework.sample.issuetracker.service.core.entity;
 
-import lombok.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 
 import com.alberoframework.core.validation.Validation;
 import com.alberoframework.domain.entity.contract.AbstractEntity;
-import com.alberoframework.sample.issuetracker.service.core.value.IssueRelatedUserValue;
-import com.alberoframework.sample.issuetracker.service.core.value.IssueRelationTypeValue;
 import com.alberoframework.sample.issuetracker.service.core.value.IssueStatusValue;
 
-import java.util.Arrays;
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -31,45 +32,40 @@ public class IssueEntity extends AbstractEntity<String> {
         issue.setIssueId(issueId);
         issue.setTitle(title);
         issue.setDescription(description);
-
-        issue.setRelatedUser(Arrays.asList(
-            new IssueRelatedUserValue(creatorUserId, IssueRelationTypeValue.CREATOR)
-        ));
+        issue.setCreatorUserId(creatorUserId);
+        issue.setStatus(IssueStatusValue.TODO);
 
         return issue;
     }
-
+	
+    private String projectId;
+    
     @Id
     private String issueId;
 
-    private String projectId;
-
     private String title;
-    private String categoryId;
+    
     private String description;
 
+    private String creatorUserId;
+    
     private IssueStatusValue status;
-
-    private List<IssueRelatedUserValue> relatedUser;
-
+    
+    private Set<String> assignedUserIds = new HashSet<>();
+    
     public void assign(String assignedUserId) {
         Validation.validate(assignedUserId != null, IllegalArgumentException::new, "assignedUserId can't be null");
-        Validation.validate(status != IssueStatusValue.TODO, IllegalArgumentException::new, "Can't assign a issue in status", status);
+        this.assignedUserIds.add(assignedUserId);
+    }
 
-        this.relatedUser.add(new IssueRelatedUserValue(assignedUserId, IssueRelationTypeValue.ASSIGNEE));
+    public void setInProgress() {
+        Validation.validate(status == IssueStatusValue.TODO, IllegalStateException::new, "Can't change issue to 'in progress' if status is not 'TODO'", status);
         this.status = IssueStatusValue.IN_PROGRESS;
     }
-
-    public void watch(String watcherUserId) {
-        Validation.validate(watcherUserId != null, IllegalArgumentException::new, "watcherUserId can't be null");
-
-        this.relatedUser.add(new IssueRelatedUserValue(watcherUserId, IssueRelationTypeValue.WATCHER));
-    }
-
+    
     public void close() {
-        Validation.validate(status != IssueStatusValue.IN_PROGRESS, IllegalArgumentException::new, "Can't close a issue in status", status);
-
-        this.status = IssueStatusValue.DONE;
+        Validation.validate(status == IssueStatusValue.IN_PROGRESS, IllegalStateException::new, "Can't close an issue if status is not 'IN PROGRESS'", status);
+        this.status = IssueStatusValue.CLOSED;
     }
 
     @Override

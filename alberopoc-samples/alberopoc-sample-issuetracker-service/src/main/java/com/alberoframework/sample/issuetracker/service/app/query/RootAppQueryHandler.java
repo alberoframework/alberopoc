@@ -7,13 +7,7 @@ import com.alberoframework.component.request.contract.SimpleAuthenticatedRequest
 import com.alberoframework.hypermedia.HypermediaObjectResource;
 import com.alberoframework.sample.issuetracker.component.query.handler.AbstractIssueTrackerEnvelopeQueryHandler;
 import com.alberoframework.sample.issuetracker.service.app.entity.RootAppEntity;
-import com.alberoframework.sample.issuetracker.service.core.command.CreateIssueCategoryCommand;
-import com.alberoframework.sample.issuetracker.service.core.command.CreateProjectCommand;
-import com.alberoframework.sample.issuetracker.service.core.command.CreateUserCommand;
-import com.alberoframework.sample.issuetracker.service.core.entity.UserEntity;
 import com.alberoframework.sample.issuetracker.service.core.query.UserQuery;
-
-import java.util.Optional;
 
 @Component
 public class RootAppQueryHandler extends AbstractIssueTrackerEnvelopeQueryHandler<RootAppQuery, HypermediaObjectResource<RootAppEntity>> {
@@ -23,16 +17,14 @@ public class RootAppQueryHandler extends AbstractIssueTrackerEnvelopeQueryHandle
 			SimpleAuthenticatedRequestEnvelope<RootAppQuery, HypermediaObjectResource<RootAppEntity>> requestEnvelope,
 			ContextualizedQueryGateway queryGateway) {
 		
-		HypermediaObjectResource<RootAppEntity> resource = requestEnvelope.userId()
-			.flatMap(uid -> queryGateway.handle(new UserQuery(uid)))
-			.map(u -> new HypermediaObjectResource<>(new RootAppEntity(u.getUsername())))
-			.orElse(new HypermediaObjectResource<>(new RootAppEntity()));
+		HypermediaObjectResource<RootAppEntity> resource = 
+				 requestEnvelope.userId()
+								.flatMap(uid -> queryGateway.handle(new UserQuery(uid)))
+								.map(u -> new HypermediaObjectResource<>(new RootAppEntity(u.getUsername())))
+								.orElse(new HypermediaObjectResource<>(new RootAppEntity()))
+								.withLink("projectCollection", new ProjectAppCollectionQuery());
 
-		return resource
-			.withLink("create-category", new CreateIssueCategoryCommand())
-			.withLink("projects", new ProjectCollectionAppQuery())
-			.withLink("create-user", new CreateUserCommand())
-			.withLink("dashboard", new UserProjectCollectionAppQuery());
+		return resource;
 	}
 	
 }

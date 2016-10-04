@@ -23,12 +23,7 @@ public class UpdateProjectCommandHandler extends AbstractIssueTrackerCommandHand
     protected VoidUnit doHandle(UpdateProjectCommand command, ContextualizedQueryGateway queryGateway, ContextualizedCommandGateway commandGateway) {
         final ProjectEntity project = projectRepository.findOne(command.getProjectId());
 
-        if (project == null) {
-            throw new IllegalArgumentException(String.format("Project with id %s doesn't exists", command.getProjectId()));
-        }
-
         project.setName(command.getName());
-        project.setMemberships(command.getMemberships());
 
         projectRepository.save(project);
 

@@ -15,12 +15,12 @@ import com.alberoframework.sample.issuetracker.service.core.repository.UserRepos
 @Component
 public class CreateUserCommandHandler extends AbstractIssueTrackerVoidCommandHandler<CreateUserCommand> {
 	@Autowired
-	UserRepository utenteRepository;
+	UserRepository userRepository;
 
 	@Override
 	protected void doHandle(CreateUserCommand command, ContextualizedQueryGateway queryGateway, ContextualizedCommandGateway commandGateway) {
 		UserEntity utenteTirocinante = UserEntity.create(command.getUserId(), command.getUsername(), command.getPassword(), command.getRole());
-		utenteRepository.save(utenteTirocinante);
+		userRepository.save(utenteTirocinante);
 	}
 
 }

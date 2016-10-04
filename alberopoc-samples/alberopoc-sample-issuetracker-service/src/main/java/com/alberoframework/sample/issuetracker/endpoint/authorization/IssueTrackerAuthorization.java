@@ -24,10 +24,10 @@ public class IssueTrackerAuthorization {
 		authorizationGateway.registerAuthorizationSpecification(
 			AssignIssueCommand.class,
 			env -> authenticated(env, userId ->
-				isIssueInStatus(env.getRequest().getIssueId(), IssueStatusValue.TODO)
+				issueIsInStatus(env.getRequest().getProjectId(), env.getRequest().getIssueId(), IssueStatusValue.TODO)
 				.and(
-					isAdmin(userId)
-					.or(isMemberOfProject(userId, env.getRequest().getProjectId()))
+					userIsAdmin(userId)
+					.or(userIsMemberOfProject(userId, env.getRequest().getProjectId()))
 				)
 			)
 		);
@@ -38,41 +38,36 @@ public class IssueTrackerAuthorization {
 		);
 
 		authorizationGateway.registerAuthorizationSpecification(
-			CreateIssueCategoryCommand.class,
-			env -> authenticated(env, userId -> isAdmin(userId))
-		);
-
-		authorizationGateway.registerAuthorizationSpecification(
 			CreateIssueCommand.class,
-			env -> authenticated(env, userId -> isAdmin(userId)
-				.or(isMemberOfProject(userId, env.getRequest().getProjectId()))
+			env -> authenticated(env, userId -> userIsAdmin(userId)
+				.or(userIsMemberOfProject(userId, env.getRequest().getProjectId()))
 			)
 		);
 
 		authorizationGateway.registerAuthorizationSpecification(
 			CreateUserCommand.class,
-			env -> authenticated(env, userId -> isAdmin(userId))
+			env -> authenticated(env, userId -> userIsAdmin(userId))
 		);
 
 		authorizationGateway.registerAuthorizationSpecification(
 			UpdateIssueCommand.class,
-			env -> authenticated(env, userId -> isAdmin(userId)
-				.or(isMemberOfProject(userId, env.getRequest().getProjectId())))
+			env -> authenticated(env, userId -> userIsAdmin(userId)
+				.or(userIsMemberOfProject(userId, env.getRequest().getProjectId())))
 		);
 
 		authorizationGateway.registerAuthorizationSpecification(
 			CreateProjectCommand.class,
-			env -> authenticated(env, PredicateQueries::isAdmin)
+			env -> authenticated(env, PredicateQueries::userIsAdmin)
 		);
 
 		authorizationGateway.registerAuthorizationSpecification(
 			CloseIssueCommand.class,
 			env -> authenticated(env, userId ->
-				isIssueInStatus(env.getRequest().getIssueId(), IssueStatusValue.IN_PROGRESS)
+				issueIsInStatus(env.getRequest().getProjectId(), env.getRequest().getIssueId(), IssueStatusValue.IN_PROGRESS)
 				.and(
-					isAdmin(userId)
-						.or(isAssignee(userId, env.getRequest().getIssueId())
-						.or(isManager(userId, env.getRequest().getProjectId())))
+					userIsAdmin(userId)
+						.or(userIsAssigneeOfIssue(env.getRequest().getProjectId(), env.getRequest().getIssueId(), userId)
+						.or(userIsManagerOfProject(env.getRequest().getProjectId(), userId)))
 				)
 			)
 		);
@@ -80,8 +75,8 @@ public class IssueTrackerAuthorization {
 		authorizationGateway.registerAuthorizationSpecification(
 			UpdateProjectCommand.class,
 			env -> authenticated(env, userId ->
-				isAdmin(userId)
-					.or(isManager(userId, env.getRequest().getProjectId()))
+				userIsAdmin(userId)
+					.or(userIsManagerOfProject(userId, env.getRequest().getProjectId()))
 			)
 		);
 

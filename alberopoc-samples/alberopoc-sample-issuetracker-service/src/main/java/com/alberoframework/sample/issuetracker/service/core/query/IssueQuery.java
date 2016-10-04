@@ -16,5 +16,6 @@ import com.alberoframework.sample.issuetracker.service.core.entity.IssueEntity;
 @AllArgsConstructor
 public class IssueQuery extends AbstractQuery<Optional<IssueEntity>>{
 
+	private String projectId;
     private String issueId;
 }

@@ -1,10 +1,9 @@
 package com.alberoframework.sample.issuetracker.util;
 import com.alberoframework.lang.object.BaseBeanUtils;
-import com.alberoframework.sample.issuetracker.service.core.command.CreateIssueCategoryCommand;
 import com.alberoframework.sample.issuetracker.service.core.command.CreateIssueCommand;
 import com.alberoframework.sample.issuetracker.service.core.command.CreateProjectCommand;
 import com.alberoframework.sample.issuetracker.service.core.command.CreateUserCommand;
-import com.alberoframework.sample.issuetracker.service.core.value.MembershipValue;
+import com.alberoframework.sample.issuetracker.service.core.value.ProjectMembershipValue;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -19,9 +18,8 @@ public class JsonUtils {
     public static void main(String[] args) {
 
         write(CreateProjectCommand.class);
-        write(MembershipValue.class);
+        write(ProjectMembershipValue.class);
         write(CreateUserCommand.class);
-        write(CreateIssueCategoryCommand.class);
         write(CreateIssueCommand.class);
     }
 

@@ -2,6 +2,7 @@ package com.alberoframework.sample.issuetracker.endpoint;
 
 import java.nio.file.Paths;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -141,8 +142,8 @@ public class IssueTrackerEndpoint {
 	}
 
 	@Bean
-	public RequestUrlMapper requestUrlMapper() {
-		return IssueTrackerUrlMapping.createRequestUrlMapperWithMappings();
+	public RequestUrlMapper requestUrlMapper(Environment env) {
+		return IssueTrackerUrlMapping.createRequestUrlMapperWithMappings(ObjectUtils.defaultIfNull(env.getProperty("baseurl"), ""));
 	}
 
 	@Bean

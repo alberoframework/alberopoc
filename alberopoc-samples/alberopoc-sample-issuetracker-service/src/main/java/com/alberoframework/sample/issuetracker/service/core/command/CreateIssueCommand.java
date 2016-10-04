@@ -2,7 +2,6 @@ package com.alberoframework.sample.issuetracker.service.core.command;
 
 import com.alberoframework.lang.VoidUnit;
 import com.alberoframework.sample.issuetracker.component.command.contract.AbstractIssueTrackerCreateEntityCommand;
-import com.alberoframework.sample.issuetracker.service.core.value.UserRoleValue;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,8 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateIssueCommand extends AbstractIssueTrackerCreateEntityCommand<VoidUnit> {
 
+	private String projectId;
     private String issueId;
-    private String projectId;
 
     private String title;
     private String description;
