@@ -15,6 +15,7 @@ public class NewSimpleIdentityEnricherCommandHandlerWrapper implements SimpleAut
 			RequestHandler<? super SimpleAuthenticatedRequestEnvelope<Command<Object>, Object>, ? super Command<Object>, ? super Object> requestHandler) {
 		return new SimpleAuthenticatedCommandHandler<Command<Object>, Object>() {
 			
+			@SuppressWarnings({ "rawtypes", "unchecked" })
 			@Override
 			public Object handle(SimpleAuthenticatedRequestEnvelope<Command<Object>, Object> requestEnv) {
 				if ((Object) requestEnv.getRequest() instanceof SimpleCreateEntityCommand) {

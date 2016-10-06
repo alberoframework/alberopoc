@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import com.alberoframework.component.authorization.gateway.SimpleAuthorizationGateway;
@@ -59,6 +58,7 @@ public class HypermediaResponseConverterRequestHandlerWrapper implements SimpleA
 		};
 	}
 
+	@SuppressWarnings("unchecked")
 	private HypermediaResource<?, ?> enrichHypermediaResource(SimpleAuthenticatedRequestEnvelope<Request<Object>, Object> envelope, HypermediaResource<?, ?> resource) {
 		Map<String, HypermediaLink> links = new HashMap<>(resource.getLinks());
 		for (Map.Entry<String, HypermediaLink> linkEntry : links.entrySet()) {

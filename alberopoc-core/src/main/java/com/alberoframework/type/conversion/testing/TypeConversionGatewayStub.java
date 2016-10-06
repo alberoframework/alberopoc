@@ -14,6 +14,7 @@ public class TypeConversionGatewayStub implements TypeConversionGateway {
 	
 	private List<TypeConversionRequest<?, ?>> conversionRequestsReceived = new ArrayList<>();
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public <S, T> T convert(S source, Class<T> targetType) {
 		conversionRequestsReceived.add(new TypeConversionRequest<S, T>(source, targetType));

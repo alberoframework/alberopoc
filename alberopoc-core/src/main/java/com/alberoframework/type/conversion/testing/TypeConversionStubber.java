@@ -15,6 +15,7 @@ public class TypeConversionStubber implements PortRequestsStubber {
 		this.stubs = stubs;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void stubPortRequests(PortRegistry portRegistry) {
 		TypeConversionGatewayStub typeConversionGatewayStub = (TypeConversionGatewayStub) portRegistry.get("typeConversionGateway");

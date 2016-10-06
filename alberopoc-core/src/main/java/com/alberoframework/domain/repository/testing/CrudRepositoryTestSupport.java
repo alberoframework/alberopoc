@@ -31,6 +31,7 @@ public abstract class CrudRepositoryTestSupport<R extends CrudRepository<E, ID>,
 //		return context(initialState, ports());
 //	}
 	
+	@SuppressWarnings("unchecked")
 	public Set<E> entities(E ... entities) {
 		Set<E> initialState = ImmutableSet.of();
 		if (entities != null) 

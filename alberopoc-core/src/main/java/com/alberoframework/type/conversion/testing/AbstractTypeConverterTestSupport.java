@@ -38,6 +38,7 @@ public abstract class AbstractTypeConverterTestSupport<C extends TypeConverter<S
 //		return new QueryStub<R1>(query);
 //	}
 	
+	@SuppressWarnings("unchecked")
 	public QueryVerifier queriesSent(RequestEnvelope<? extends Query<?>, ?> ... queries) {
 		return new QueryVerifier(Arrays.asList(queries));
 	}

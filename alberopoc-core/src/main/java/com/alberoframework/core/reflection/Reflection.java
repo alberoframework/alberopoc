@@ -27,6 +27,7 @@ public class Reflection {
 		return obj;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static <T> T newInstance(Class<T> clazz, List<Object> dependencies) {
 
 		T object = null;

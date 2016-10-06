@@ -30,9 +30,11 @@ public class DesignByContract {
     }
 
 
-    public static class PreconditionViolatedException extends IllegalArgumentException {
+	public static class PreconditionViolatedException extends IllegalArgumentException {
     	
-        public PreconditionViolatedException() {
+		private static final long serialVersionUID = -8000139364736671535L;
+
+		public PreconditionViolatedException() {
         }
 
         public PreconditionViolatedException(String s) {
@@ -48,8 +50,11 @@ public class DesignByContract {
         }
     }
 
-    public static class PostconditionViolatedException extends RuntimeException {
-        public PostconditionViolatedException() {
+	public static class PostconditionViolatedException extends RuntimeException {
+
+		private static final long serialVersionUID = 3894931889158828730L;
+
+		public PostconditionViolatedException() {
         }
 
         public PostconditionViolatedException(String message) {
