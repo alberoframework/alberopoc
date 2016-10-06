@@ -31,10 +31,10 @@ compileJava {
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven {
         url 'https://github.com/alberoframework/alberopoc/raw/master/mvn-repo'
     }
+    mavenLocal()
 }
 
 dependencies {

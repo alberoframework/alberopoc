@@ -12,10 +12,10 @@ compileJava {
 
 repositories {
     mavenCentral()
-    mavenLocal()
     maven {
         url 'https://github.com/alberoframework/alberopoc/raw/master/mvn-repo'
     }
+    mavenLocal()
 }
 
 task sourceJar(type: Jar) {
