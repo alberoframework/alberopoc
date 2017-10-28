@@ -17,9 +17,9 @@ public class ProjectAppQueryHandler extends AbstractIssueTrackerEnvelopeQueryHan
         final String projectId = env.getRequest().getProjectId();
 
         return  queryGateway.handle(new ProjectQuery(projectId))
-				            .map(project -> new HypermediaObjectResource<>(project)
-						    .withLink("update", new UpdateProjectCommand(projectId))
-						    .withLink("issues", new ProjectIssuesCollectionAppQuery(projectId)))
-				            .orElseThrow(() -> new IllegalStateException("No project with id " + projectId + " found"));
+		    .map(project -> new HypermediaObjectResource<>(project)
+			    .withLink("update", new UpdateProjectCommand(projectId))
+			    .withLink("issues", new ProjectIssuesCollectionAppQuery(projectId)))
+		    .orElseThrow(() -> new IllegalStateException("No project with id " + projectId + " found"));
     }
 }
